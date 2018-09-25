@@ -1,0 +1,17 @@
+{
+	"name": "resourcesbooking",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"debug": "^3.1.0",
+		"express": "^4.16.3",
+		"request": "^2.88.0",
+		"slimbot": "^0.8.0"
+	}
+}
