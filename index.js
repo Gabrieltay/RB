@@ -59,33 +59,27 @@ function getTimeslotOptions(date) {
 	};
 }
 
-function getRoomOptions(date, time) {
+function getDurationOptions(date, time) {
 	return {
 		parse_mode: 'Markdown',
 		reply_markup: JSON.stringify({
 			inline_keyboard: [
 				[
 					{
-						text: roomList[4],
-						callback_data: JSON.stringify({ date: date, time: time, room: 4 }),
+						text: '1 hr',
+						callback_data: JSON.stringify({ date: date, time: time, dura: '1 hr' }),
 					},
 				],
 				[
 					{
-						text: roomList[1],
-						callback_data: JSON.stringify({ date: date, time: time, room: 1 }),
+						text: '2 hr',
+						callback_data: JSON.stringify({ date: date, time: time, dura: '2 hr' }),
 					},
 				],
 				[
 					{
-						text: roomList[2],
-						callback_data: JSON.stringify({ date: date, time: time, room: 2 }),
-					},
-				],
-				[
-					{
-						text: roomList[3],
-						callback_data: JSON.stringify({ date: date, time: time, room: 3 }),
+						text: '3 hr',
+						callback_data: JSON.stringify({ date: date, time: time, dura: '3 hr' }),
 					},
 				],
 			],
@@ -93,8 +87,42 @@ function getRoomOptions(date, time) {
 	};
 }
 
-function bookingConfirmed(room, date, time, fullName, userName) {
-	return `Your Booking is confirmed! \n----------------------------\nRoom: ${room}\nDate: ${date}\nTime: ${time}\nBy: ${fullName} (@${userName})`;
+function getRoomOptions(date, time, dura) {
+	return {
+		parse_mode: 'Markdown',
+		reply_markup: JSON.stringify({
+			inline_keyboard: [
+				[
+					{
+						text: roomList[4],
+						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 4 }),
+					},
+				],
+				[
+					{
+						text: roomList[1],
+						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 1 }),
+					},
+				],
+				[
+					{
+						text: roomList[2],
+						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 2 }),
+					},
+				],
+				[
+					{
+						text: roomList[3],
+						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 3 }),
+					},
+				],
+			],
+		}),
+	};
+}
+
+function bookingConfirmed(room, date, time, dura, fullName, userName) {
+	return `Your Booking is confirmed! \n----------------------------\nRoom: ${room}\nDate: ${date}\nTime: ${time}\nDuration: ${dura}\nBy: ${fullName} (@${userName})`;
 }
 
 // Register listener
@@ -114,7 +142,7 @@ slimbot.on('message', message => {
 });
 
 function startBookingRoom(chatId) {
-	slimbot.sendMessage(chatId, 'Please select a date to book your room 😎:', getTodayOrTomorrowOptions());
+	slimbot.sendMessage(chatId, 'Please select date:', getTodayOrTomorrowOptions());
 }
 
 function processBookingRoom(query) {
@@ -126,15 +154,22 @@ function processBookingRoom(query) {
 		slimbot.editMessageText(
 			chatId,
 			query.message.message_id,
-			'Please select a time:',
+			'Please select time:',
 			getTimeslotOptions(callback_data.date)
+		);
+	} else if (!callback_data.dura) {
+		slimbot.editMessageText(
+			chatId,
+			query.message.message_id,
+			'Please select duration:',
+			getTimeslotOptions(callback_data.date, callback_data.time)
 		);
 	} else if (!callback_data.room) {
 		slimbot.editMessageText(
 			chatId,
 			query.message.message_id,
-			'Please select a room:',
-			getRoomOptions(callback_data.date, callback_data.time)
+			'Please select room:',
+			getRoomOptions(callback_data.date, callback_data.time, callback_data.dura)
 		);
 	} else {
 		bookingRoom(query);
@@ -159,6 +194,7 @@ function bookingRoom(query) {
 				roomList[callback_data.room],
 				callback_data.date,
 				callback_data.time,
+				callback_data.dura,
 				`${query.from.first_name}`,
 				query.from.username
 			)
@@ -175,7 +211,7 @@ function bookedRoom(query) {
 	if (admin !== '') {
 		slimbot.sendMessage(
 			admin,
-			`${query.from.first_name}(@${query.from.userName}) has just booked a room ${roomList[callback_data.room]}`
+			`${query.from.first_name}(@${query.from.username}) has just booked a room ${roomList[callback_data.room]}`
 		);
 	}
 }
