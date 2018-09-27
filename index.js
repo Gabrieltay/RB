@@ -232,7 +232,7 @@ function processBookingRoom(query) {
 				date: callback_data.date,
 				room: callback_data.room,
 				time: callback_data.time,
-				dur: callback_data.dura
+				dura: callback_data.dura
 			};
 		});
 	}
