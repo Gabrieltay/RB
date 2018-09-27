@@ -39,10 +39,12 @@ function getTimeslotOptions(date) {
 		reply_markup: JSON.stringify({
 			inline_keyboard: [
 				[
-					[{ text: '12:00 PM', callback_data: JSON.stringify({ date: date, time: '12:00 PM' }) },
-					{ text: '13:00 PM', callback_data: JSON.stringify({ date: date, time: '13:00 PM' }) }],
-					[{ text: '14:00 PM', callback_data: JSON.stringify({ date: date, time: '14:00 PM' }) },
-					{ text: '15:00 PM', callback_data: JSON.stringify({ date: date, time: '15:00 PM' }) }],
+					{ text: '12:00 PM', callback_data: JSON.stringify({ date: date, time: '12:00 PM' }) },
+					{ text: '13:00 PM', callback_data: JSON.stringify({ date: date, time: '13:00 PM' }) }
+				],
+				[
+					{ text: '14:00 PM', callback_data: JSON.stringify({ date: date, time: '14:00 PM' }) },
+					{ text: '15:00 PM', callback_data: JSON.stringify({ date: date, time: '15:00 PM' }) },
 				],
 			],
 		}),
