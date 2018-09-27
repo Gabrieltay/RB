@@ -171,6 +171,17 @@ function bookingConfirmed(room, date, time, dura, userName, text) {
 	`;
 }
 
+function bookingConfirmedAdmin(room, date, time, dura, userName) {
+	return `You have received a booking request! \n----------------------------\n \
+	Date: ${date}\n \
+	Time: ${time}\n \
+	Duration: ${dura}\n \
+	Room: ${room}\n \
+	Booked by: @${userName}\n\
+	----------------------------\n\
+	`;
+}
+
 // Register listener
 slimbot.on('message', message => {
 	switch (message.text.trim()) {
@@ -299,7 +310,8 @@ function bookedRoom(booking) {
 	if (admin !== '') {
 		slimbot.sendMessage(
 			admin,
-			`@${booking.name} has just booked a room ${roomList[booking.room]}`
+			bookingConfirmedAdmin(booking)
+			// `@${booking.name} has just booked a room ${roomList[booking.room]}`
 		);
 	}
 }
