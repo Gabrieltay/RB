@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => debug(`Listening on port ${PORT}`));
 
-const slimbot = new Slimbot(process.env['TELEGRAM_BOT_TOKEN']);
+const slimbot = new Slimbot(process.env['TELEGRAM_BOT_TOKEN'] || '652564326:AAHDCLRLVRLbqQvFlSInKeSuKGE6O1qSHyw');
 
 var admin = '';
 
@@ -39,10 +39,10 @@ function getTimeslotOptions(date) {
 		reply_markup: JSON.stringify({
 			inline_keyboard: [
 				[
-					{ text: '12:00 PM', callback_data: JSON.stringify({ date: date, time: '12:00 PM' }) },
-					{ text: '13:00 PM', callback_data: JSON.stringify({ date: date, time: '13:00 PM' }) },
-					{ text: '14:00 PM', callback_data: JSON.stringify({ date: date, time: '14:00 PM' }) },
-					{ text: '15:00 PM', callback_data: JSON.stringify({ date: date, time: '15:00 PM' }) },
+					[{ text: '12:00 PM', callback_data: JSON.stringify({ date: date, time: '12:00 PM' }) },
+					{ text: '13:00 PM', callback_data: JSON.stringify({ date: date, time: '13:00 PM' }) }],
+					[{ text: '14:00 PM', callback_data: JSON.stringify({ date: date, time: '14:00 PM' }) },
+					{ text: '15:00 PM', callback_data: JSON.stringify({ date: date, time: '15:00 PM' }) }],
 				],
 			],
 		}),
