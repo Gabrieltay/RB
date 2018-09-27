@@ -299,7 +299,7 @@ function bookedRoom(booking) {
 	if (admin !== '') {
 		slimbot.sendMessage(
 			admin,
-			`${booking.name} has just booked a room ${roomList[booking.room]}`
+			`@${booking.name} has just booked a room ${roomList[booking.room]}`
 		);
 	}
 }
