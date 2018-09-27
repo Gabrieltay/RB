@@ -192,6 +192,7 @@ function startBookingRoom(chatId) {
 function processBookingRoom(query) {
 	var chatId = query.message.chat.id;
 	let callback_data = JSON.parse(query.data);
+	console.log(callback_data)
 	if (!callback_data.date) {
 		startBookingRoom(chatId);
 	} else if (!callback_data.time) {
