@@ -158,7 +158,7 @@ function bookingRoom(query) {
 			)
 		)
 		.then(message => {
-			slimbot.sendMessage(query.message.chat.id, '/book');
+			slimbot.sendMessage(query.message.chat.id, 'To submit a meeting room request, type /book');
 		})
 		.then(bookedRoom(query));
 }
