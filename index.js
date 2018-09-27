@@ -167,7 +167,7 @@ function bookingConfirmed(room, date, time, dura, userName, text) {
 	Room: ${room}\n \
 	Department: ${text}\n \
 	Booked by: @${userName}\n \
-	----------------------------\n \
+	----------------------------\n\
 	You will be notified by an administrator on the outcome of your request! 😊 \
 	`;
 }
