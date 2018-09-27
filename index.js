@@ -288,6 +288,9 @@ function confirmBooking(booking, text) {
 			)
 		)
 		.then(message => {
+			slimbot.sendMessage(booking.id, 'You will be notified by an administrator on the outcome of your request. Thank you.')
+		})
+		.then(message => {
 			slimbot.sendMessage(booking.id, 'To submit a meeting room request, type /book');
 		})
 		.then(bookedRoom(booking));
