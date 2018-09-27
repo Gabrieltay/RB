@@ -160,13 +160,15 @@ function setDescription(date, time, dura, room) {
 }
 
 function bookingConfirmed(room, date, time, dura, userName, text) {
-	return `Your Booking request has been submitted! \n----------------------------\n \
+	return `Your booking request has been submitted! \n----------------------------\n \
 	Date: ${date}\n \
 	Time: ${time}\n \
 	Duration: ${dura}\n \
 	Room: ${room}\n \
 	Department: ${text}\n \
-	Booked by: ${userName}`;
+	Booked by: @${userName}\n\n \
+	You will be notified by an administrator on the outcome of your request! 😊 \
+	`;
 }
 
 // Register listener
@@ -287,9 +289,6 @@ function confirmBooking(booking, text) {
 				text
 			)
 		)
-		.then(message => {
-			slimbot.sendMessage(booking.id, 'You will be notified by an administrator on the outcome of your request. Thank you.')
-		})
 		.then(message => {
 			slimbot.sendMessage(booking.id, 'To submit a meeting room request, type /book');
 		})
