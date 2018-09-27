@@ -162,7 +162,7 @@ function processBookingRoom(query) {
 			chatId,
 			query.message.message_id,
 			'Please select duration:',
-			getTimeslotOptions(callback_data.date, callback_data.time)
+			getDurationOptions(callback_data.date, callback_data.time)
 		);
 	} else if (!callback_data.room) {
 		slimbot.editMessageText(
