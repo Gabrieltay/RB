@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => debug(`Listening on port ${PORT}`));
 
-const slimbot = new Slimbot(process.env['TELEGRAM_BOT_TOKEN'] || '652564326:AAHDCLRLVRLbqQvFlSInKeSuKGE6O1qSHyw');
+const slimbot = new Slimbot(process.env['TELEGRAM_BOT_TOKEN']);
 
 var admin = '';
 
@@ -155,10 +155,6 @@ function getRoomOptions(date, time, dura) {
 	};
 }
 
-function setDescription(date, time, dura, room) {
-
-}
-
 function bookingConfirmed(room, date, time, dura, userName, text) {
 	return `Your booking request has been submitted! \n----------------------------\n \
 	Date: ${date}\n \
@@ -187,6 +183,7 @@ slimbot.on('message', message => {
 	switch (message.text.trim()) {
 		case '/register':
 			admin = message.chat.id;
+			console.log(`Admin - ${admin}`)
 			slimbot.sendMessage(admin, 'You have registered as Admin');
 			break;
 		case '/start':
@@ -310,7 +307,12 @@ function bookedRoom(booking) {
 	if (admin !== '') {
 		slimbot.sendMessage(
 			admin,
-			bookingConfirmedAdmin(booking)
+			bookingConfirmedAdmin(
+				roomList[booking.room],
+				booking.date,
+				booking.time,
+				booking.dura,
+				booking.name)
 			// `@${booking.name} has just booked a room ${roomList[booking.room]}`
 		);
 	}
