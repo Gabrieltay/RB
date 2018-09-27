@@ -27,6 +27,7 @@ function getTodayOrTomorrowOptions() {
 				[
 					{ text: 'Today', callback_data: JSON.stringify({ date: 'Today' }) },
 					{ text: 'Tomorrow', callback_data: JSON.stringify({ date: 'Tomorrow' }) },
+					{ text: 'Others', callback_data: JSON.stringify({ date: 'Others' }) },
 				],
 			],
 		}),
