@@ -160,7 +160,13 @@ function setDescription(date, time, dura, room) {
 }
 
 function bookingConfirmed(room, date, time, dura, userName, text) {
-	return `Your Booking is confirmed! \n----------------------------\nRoom: ${room}\nDate: ${date}\nTime: ${time}\nDuration: ${dura}\nBy: ${userName}\nDept: ${text}`;
+	return `Your Booking request has been submitted! \n----------------------------\n \
+	Date: ${date}\n \
+	Time: ${time}\n \
+	Duration: ${duration}\n \
+	Room: ${room}\n \
+	Department: ${text}\n \
+	Booked by: ${username}`;
 }
 
 // Register listener
