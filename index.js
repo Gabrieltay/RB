@@ -11,6 +11,8 @@ const slimbot = new Slimbot(process.env['TELEGRAM_BOT_TOKEN'] || '652564326:AAHD
 
 var admin = '';
 
+let bookerList = {};
+
 const roomList = [
 	'Null',
 	'Leadership (30pax)',
@@ -153,7 +155,11 @@ function getRoomOptions(date, time, dura) {
 	};
 }
 
-function bookingConfirmed(room, date, time, dura, fullName, userName) {
+function setDescription(date, time, dura, room) {
+
+}
+
+function bookingConfirmed(room, date, time, dura, fullName, userName, text) {
 	return `Your Booking is confirmed! \n----------------------------\nRoom: ${room}\nDate: ${date}\nTime: ${time}\nDuration: ${dura}\nBy: ${fullName} (@${userName})`;
 }
 
@@ -170,6 +176,12 @@ slimbot.on('message', message => {
 		case '/book':
 			startBookingRoom(message.chat.id);
 			break;
+		default:
+			{
+				if (bookerList[message.chat.id] && bookerList[message.chat.id].room) {
+					confirmBooking(bookerList[message.chat.id], message.text);
+				}
+			}
 	}
 });
 
@@ -204,7 +216,24 @@ function processBookingRoom(query) {
 			getRoomOptions(callback_data.date, callback_data.time, callback_data.dura)
 		);
 	} else {
-		bookingRoom(query);
+		//bookingRoom(query);
+		slimbot.editMessageText(
+			chatId,
+			query.message.message_id,
+			'Please enter the department:'
+		).then((message) => {
+			let botId = message.result.chat.id;
+			bookerList[query.from.id] = {
+				id: query.from.id,
+				chatType: query.message.chat.type,
+				msgid: query.message.message_id,
+				name: query.from.username,
+				date: callback_data.date,
+				room: callback_data.room,
+				time: callback_data.time,
+				dur: callback_data.dura
+			};
+		});
 	}
 }
 
@@ -215,35 +244,53 @@ slimbot.on('callback_query', query => {
 // Call API
 slimbot.startPolling();
 
-function bookingRoom(query) {
-	let callback_data = JSON.parse(query.data);
-	console.log(query);
+// function bookingRoom(query) {
+// 	let callback_data = JSON.parse(query.data);
+// 	console.log(query);
+// 	slimbot
+// 		.editMessageText(
+// 			query.message.chat.id,
+// 			query.message.message_id,
+// 			bookingConfirmed(
+// 				roomList[callback_data.room],
+// 				callback_data.date,
+// 				callback_data.time,
+// 				callback_data.dura,
+// 				`${query.from.first_name}`,
+// 				query.from.username
+// 			)
+// 		)
+// 		.then(message => {
+// 			slimbot.sendMessage(query.message.chat.id, 'To submit a meeting room request, type /book');
+// 		})
+// 		.then(bookedRoom(query));
+// }
+
+function confirmBooking(booking, text) {
 	slimbot
 		.editMessageText(
-			query.message.chat.id,
-			query.message.message_id,
+			booking.id,
+			booking.msgid,
 			bookingConfirmed(
-				roomList[callback_data.room],
-				callback_data.date,
-				callback_data.time,
-				callback_data.dura,
-				`${query.from.first_name}`,
-				query.from.username
+				roomList[booking.room],
+				booking.date,
+				booking.time,
+				booking.dura,
+				booking.name,
+				text
 			)
 		)
 		.then(message => {
-			slimbot.sendMessage(query.message.chat.id, 'To submit a meeting room request, type /book');
+			slimbot.sendMessage(booking.id, 'To submit a meeting room request, type /book');
 		})
-		.then(bookedRoom(query));
+		.then(bookedRoom(booking));
 }
 
-function bookedRoom(query) {
-	let callback_data = JSON.parse(query.data);
-	console.log(query);
+function bookedRoom(booking) {
 	if (admin !== '') {
 		slimbot.sendMessage(
 			admin,
-			`${query.from.first_name}(@${query.from.username}) has just booked a room ${roomList[callback_data.room]}`
+			`${booking.name} has just booked a room ${roomList[booking.room]}`
 		);
 	}
 }
