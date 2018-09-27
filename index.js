@@ -163,7 +163,7 @@ function bookingConfirmed(room, date, time, dura, userName, text) {
 	return `Your Booking request has been submitted! \n----------------------------\n \
 	Date: ${date}\n \
 	Time: ${time}\n \
-	Duration: ${duration}\n \
+	Duration: ${dura}\n \
 	Room: ${room}\n \
 	Department: ${text}\n \
 	Booked by: ${username}`;
