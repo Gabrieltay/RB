@@ -166,7 +166,7 @@ function bookingConfirmed(room, date, time, dura, userName, text) {
 	Duration: ${dura}\n \
 	Room: ${room}\n \
 	Department: ${text}\n \
-	Booked by: ${username}`;
+	Booked by: ${userName}`;
 }
 
 // Register listener
