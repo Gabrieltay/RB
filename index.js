@@ -99,7 +99,7 @@ slimbot.on('message', message => {
 			slimbot.sendMessage(admin, 'You have registered as Admin');
 			break;
 		case '/start':
-			slimbot.sendMessage(admin, 'To submit a meeting room request, type /book');
+			slimbot.sendMessage(message.chat.id, 'To submit a meeting room request, type /book');
 			break;
 		case '/book':
 			startBookingRoom(message.chat.id);
