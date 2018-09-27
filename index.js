@@ -12,11 +12,17 @@ const slimbot = new Slimbot(process.env['TELEGRAM_BOT_TOKEN'] || '652564326:AAHD
 var admin = '';
 
 const roomList = [
-	'Temasek Room L4 (20pax)',
-	'Temasek Room L4 (20pax)',
-	'Changi Room L5 (30pax)',
-	'Bishan Room L6 (10pax)',
-	'Orchard Room L7 (20pax)',
+	'Null',
+	'Leadership (30pax)',
+	'Respect (30pax)',
+	'Teamwork (30pax)',
+	'Professionalism (20pax)',
+	'Openness (40pax)',
+	'#05-05 (10pax)',
+	'#08-05 (10pax)',
+	'#09-05 (20pax)',
+	'#10-05 (20pax)',
+	'#18-05 (20pax)'
 ];
 
 function getTodayOrTomorrowOptions() {
@@ -94,17 +100,9 @@ function getRoomOptions(date, time, dura) {
 			inline_keyboard: [
 				[
 					{
-						text: roomList[4],
-						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 4 }),
-					},
-				],
-				[
-					{
 						text: roomList[1],
 						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 1 }),
 					},
-				],
-				[
 					{
 						text: roomList[2],
 						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 2 }),
@@ -114,6 +112,40 @@ function getRoomOptions(date, time, dura) {
 					{
 						text: roomList[3],
 						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 3 }),
+					},
+					{
+						text: roomList[4],
+						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 4 }),
+					},
+				],
+				[
+					{
+						text: roomList[5],
+						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 5 }),
+					},
+					{
+						text: roomList[6],
+						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 6 }),
+					},
+				],
+				[
+					{
+						text: roomList[7],
+						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 7 }),
+					},
+					{
+						text: roomList[8],
+						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 8 }),
+					},
+				],
+				[
+					{
+						text: roomList[9],
+						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 9 }),
+					},
+					{
+						text: roomList[10],
+						callback_data: JSON.stringify({ date: date, time: time, dura: dura, room: 10 }),
 					},
 				],
 			],
